@@ -1,0 +1,18 @@
+{
+    "name": "kissy-do",
+    "comName":"kissy-do",
+    "version": "1.0",
+    "desc": "\"Yes, I do\". Do是一个同步执行方法队列，可以让多个异步任务按顺序同步执行。",
+    "tag":"同步,流程控制,kissy-mini,done",
+    "githubName":"neekey",
+    "author": {
+        "name": "隐若",
+        "email": "yinruo.nyj@taobao.com",
+        "page": ""
+    },
+    "cover": "http://gtms02.alicdn.com/tps/i2/T15mumFQdbXXarjWvr-601-600.png",
+	"flexComboPort":"81",
+	"reserveServerPort":"8080",
+    "type": "kissy-gallery",
+    "type-url": "http://gallery.kissyui.com/guide"
+}
