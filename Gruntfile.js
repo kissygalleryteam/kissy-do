@@ -32,6 +32,10 @@ module.exports = function(grunt) {
                     {
                         src: "<%= pkg.version %>/index.js",
                         dest: "<%= pkg.version %>/build/index.js"
+                    },
+                    {
+                        src: "<%= pkg.version %>/mini.js",
+                        dest: "<%= pkg.version %>/build/mini.js"
                     }
                 ]
             }
@@ -42,6 +46,11 @@ module.exports = function(grunt) {
          */
         uglify: {
             options: {
+                compress:{
+                    global_defs:{"DEBUG":false},
+                    drop_console:true,
+                    dead_code:true
+                },
                 banner: '<%= banner %>',
                 beautify: {
                     ascii_only: true
@@ -65,10 +74,10 @@ module.exports = function(grunt) {
 			// https://speakerdeck.com/lijing00333/grunt-flexcombo
 			debug:{
 				options:{
-					proxyport:8080,
+					proxyport:"<%= pkg.reserveServerPort %>",
 					target:'<%= pkg.version %>/build/',
 					urls:'/s/kissy/gallery/<%= pkg.name %>/<%= pkg.version %>',
-					port:'80',
+					port:"<%= pkg.flexComboPort %>",
 					servlet:'?',
 					separator:',',
 					charset:'gbk', // 输出文件的编码
@@ -80,10 +89,10 @@ module.exports = function(grunt) {
 			},
             demo:{
                 options:{
-                    proxyport:8080,
+					proxyport:"<%= pkg.reserveServerPort %>",
                     target:'<%= pkg.version %>/',
                     urls:'/s/kissy/gallery/<%= pkg.name %>/<%= pkg.version %>',
-                    port:'80',
+					port:"<%= pkg.flexComboPort %>",
                     proxyHosts:['demo'],
                     servlet:'?',
                     separator:',',

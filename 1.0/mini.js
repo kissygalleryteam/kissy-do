@@ -3,25 +3,119 @@
  * @author 隐若<yinruo.nyj@taobao.com>
  * @module do
  **/
-KISSY.add(function (S, Node, Lang) {
-    var $ = Node.all,
-        EventTarget = S.Event.Target;
+KISSY.add(function () {
+
     /**
-     *
-     * @class Do
+     * Do.js
      * @constructor
      */
-    function Do(config) {
+    var Do = function(){
+        this.queue = [];
+    };
 
-    }
+    Do.prototype = {
 
-    S.augment(Do, EventTarget, /** @lends Do.prototype*/{
+        /**
+         * Add method to queue.
+         * @param {Function} fun
+         */
 
-    });
+        add: function( fun ){
 
-    return Do;
+            var self = this;
 
-}, {requires:['node', 'lang']});
+            var done = function(){
+                self.done( task );
+            };
+
+            var task = {
+                fn: fun,
+                done: done
+            };
+
+            this.queue.push( task );
+
+            // If `fun` is the only one in the queue, execute it.
+            if( this.queue.length == 1 ){
+                this.next();
+            }
+        },
+
+        /**
+         * Remove task item from queue.
+         * @param {Object} t task object.
+         */
+
+        remove: function( t ){
+
+            var task
+                ,index;
+            for( index = 0; task = this.queue[ index ]; index++ ){
+                if( task === t ){
+
+                    // Remove the task.
+                    this.queue.splice( index, 1 );
+                    break;
+                }
+            }
+        },
+
+        /**
+         * Remove the finished task and find get next task to run.
+         * @param {Object} t The finished task.
+         */
+
+        done: function( t ){
+            this.remove( t );
+            this.next();
+        },
+
+        /**
+         * Get the first task of the queue to run.
+         */
+
+        next: function(){
+            var task = this.queue[ 0 ];
+            if( task && typeof task.fn == 'function' ){
+                task.fn( task.done );
+            }
+        }
+    };
+
+    /**
+     * A factory for Do.
+     * @return {Function}
+     */
+
+    var NewQueue = function(){
+        var newDo = new Do();
+        return function(fun){
+            newDo.add( fun );
+        }
+    };
+
+    /**
+     * Singleton of `Do`
+     * @type {Do}
+     */
+
+    var DoInstant = new Do();
+
+    /**
+     * Method to wrap `Do.add`
+     * @param fun
+     * @constructor
+     */
+
+    var DoAdd = function(fun){
+        DoInstant.add( fun );
+    };
+
+    DoAdd.newQueue = NewQueue;
+
+    return DoAdd;
+
+});
 
 
 

@@ -1,7 +1,7 @@
 /*
 combined files : 
 
-gallery/kissy-do/1.0/index
+gallery/kissy-do/1.0/mini
 
 */
 /**
@@ -9,7 +9,7 @@ gallery/kissy-do/1.0/index
  * @author 隐若<yinruo.nyj@taobao.com>
  * @module do
  **/
-KISSY.add('gallery/kissy-do/1.0/index',function () {
+KISSY.add('gallery/kissy-do/1.0/mini',function () {
 
     /**
      * Do.js
