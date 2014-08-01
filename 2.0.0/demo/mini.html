@@ -1,0 +1,74 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>kissy-do的demo</title>
+    <script src="http://g.tbcdn.cn/kissy/m/0.2.0/mini-full-min.js" charset="utf-8"></script>
+</head>
+<body>
+<h2>kissy-do的demo</h2>
+<div id="J_Loger">begin timeout....</div>
+
+
+<a href="http://m.kissyui.com/" target="_blank">KISSY MINI官方文档</a>
+<span id="QRCode"></span>
+<script>
+    (function(S) {
+        var debug = ~location.search.indexOf('ks-debug');
+
+        if (debug) {
+            var srcPath = "../../";
+            S.config({
+                debug: debug,
+                packages:[
+                    {
+                        name:"kg/kissy-do",
+                        path:srcPath,
+                        charset:"utf-8",
+                        ignorePackageNameInUri:true
+                    }
+                ]
+            });
+        }
+
+        S.use('kg/kissy-do/2.0.0/mini', function (S, Do ) {
+            var Loger = document.getElementById( 'J_Loger' );
+
+            Loger.innerHTML += '<br>insert first task into queue';
+            Do(function( done ){
+                Loger.innerHTML += '<br>first begin ( yell after 5s )';
+                setTimeout(function(){
+                    console.log( 'first over' );
+                    Loger.innerHTML += '<br>first over';
+                    done();
+                }, 5000);
+            });
+
+            Loger.innerHTML += '<br>insert second task into queue';
+            Do(function( done ){
+                Loger.innerHTML += '<br>second begin ( yell after 2s )';
+
+                setTimeout(function(){
+                    console.log( 'second over' );
+                    Loger.innerHTML += '<br>second over';
+                    done();
+                }, 2000);
+            });
+        })
+    })(KISSY);
+</script>
+<script type="text/javascript">
+    KISSY.use('kg/qrcode/2.0.0/',function(S,QRCode){
+        var qrcode = new QRCode("QRCode", {
+            width: 128,
+            height: 128,
+            colorDark : "#000000",
+            colorLight : "#ffffff",
+            correctLevel : QRCode.CorrectLevel.H
+        });
+
+        qrcode.makeCode(location.href);
+    });
+</script>
+</body>
+</html>
